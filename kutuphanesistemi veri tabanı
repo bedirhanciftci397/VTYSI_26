@@ -1,0 +1,74 @@
+create database kutuphaneSistemii
+    use kutuphaneSistemii;
+
+create table uyelerr (
+uyeNo int Primary Key identity(1,1),
+uyeAdi nvarchar(20) not null,
+uyeSoyadi nvarchar(25),
+telefon nvarchar(25),
+cinsiyet nchar(2), 
+eposta nvarchar(100)
+);
+
+create table adreslerr(
+adresNo int Primary Key identity(1,1) not null,
+mahalle nvarchar(100) not null,
+cadde nvarchar(100) not null,
+binaNo int,
+postaKodu int,
+sehir nvarchar(20),
+ulke nvarchar(30)
+);
+
+alter table uyelerr
+add adresNo int
+constraint "uyelerrr_adreslerr" 
+foreign key (adresNo)  References adreslerr(adresNo); 
+
+
+create table kutuphane(
+kutuphaneNo int primary key,
+kutuphaneismi nvarchar(50),
+aciklama nvarchar(50),
+adresNo int foreign key (adresNo)  References adreslerr(adresNo)
+); 
+create table kitaplar(
+isbn nvarchar(50) not null primary key,
+sayfaSayisi nvarchar(50) not null,
+kitapAdi int,
+yayinTarihi datetime
+);
+create table emanet(
+emanetNo int primary key not null identity(1,1),
+emanetTarihi datetime,
+teslimTarihi datetime,
+uyeNo int foreign key (uyeNo) References uyelerr(uyeNo),
+isbn  nvarchar(50) foreign key (isbn) references kitaplar(isbn)
+);
+create table kategori(
+kategoriNo int primary key identity(1,1)not null ,
+kategoriAdi nvarchar(100)not null,
+);
+create table yazarlar(
+yazarNo int primary key identity(1,1) not null,
+yazarAdi nvarchar(50) not null,
+yazarSoyadi nvarchar(25) not null,
+);
+use kutuphaneSistemii
+create table kategori_kitap(
+id int primary key identity(1,1) not null,
+isbn nvarchar(50) foreign key (isbn) references kitaplar (isbn),
+kategoriNo int foreign key (kategoriNo) references kategori (kategoriNo)
+);
+create table kitap_yazarlar(
+id int primary key identity(1,1) not null,
+isbn nvarchar(50) foreign key (isbn) references kitaplar (isbn),
+yazarNo int foreign key (yazarNo) references yazarlar (yazarNo),
+);
+
+create table kitap_kutuphane(
+id int primary key identity(1,1) not null,
+miktar int not null,
+isbn nvarchar(50) foreign key (isbn) references kitaplar (isbn),
+kutuphaneNo int foreign key (kutuphaneNo) references kutuphane (kutuphaneNo),
+);
