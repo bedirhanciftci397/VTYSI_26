@@ -1,0 +1,41 @@
+use KutuphaneSistemi
+
+ 
+insert into Uyeler values ('Bedirhan','Çiftçi','E',5058270146,'bedirhanciftci397')
+
+insert into Adresler values ('Kayseri','Melana',38,3800,'Türkiye','15 Temmuzz')
+insert into Adresler (sehir,ulke) values ('İstanbul','Türkiye')
+
+insert into emanet (emanetTarihi, teslimTarihi) values (2026-03-30, 2026-04-30)
+
+insert into kategori values ('Bilim Kurgu')
+
+insert into kategori_kitap(kategoriNo) values (1)
+
+insert into kitap_yazarlar(yazarNo) values (1)
+
+insert into kitaplar values ('A123','vtys I',300, '03.11.2024')
+insert into kitaplar values ('B123','vtys II',400, '03.11.2025')
+
+insert into kutuphane values(1,'Kayü','kayseri şehrinde',1)
+insert into kutuphane values(2,'İtü','istanbul şehrinde',2)
+
+insert into yazarlar values ('Kamel', 'Tahir')
+
+insert into kitap_kutuphane (miktar,kutuphaneNo) values (3,2)
+
+
+select * from Uyeler
+select * from Adresler
+select * from emanet
+select * from kategori
+select * from kategori_kitap
+select * from kitap_yazarlar
+select * from kitaplar
+select * from kutuphane
+select * from yazarlar
+select * from kitap_kutuphane
+
+update Uyeler set eposta='bedirhanciftci397@gmail.com' where uyeNo=3
+
+delete from uyeler where uyeNo=4; 
