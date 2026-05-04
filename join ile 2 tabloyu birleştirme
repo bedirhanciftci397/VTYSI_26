@@ -1,0 +1,33 @@
+create database OBS
+use OBS
+create table bolum(
+bolum_id int primary key not null identity(1,1),
+bolum_ad nvarchar(50)
+);
+
+create table ogr(
+ogr_no int primary key not null identity(1,1),
+bolum_id int foreign key (bolum_id) references bolum (bolum_id),
+ogr_adi nvarchar(50),
+ogr_sooyadi nvarchar(50),
+adres nvarchar(150)
+);
+
+insert into ogr values (1,'Fatma Nur','Kılıçkaya','Kayseri');
+insert into ogr values (2,'Bedirhan','Kılıçkaya','Kayseri');
+insert into ogr values (3,'Arda','Şahin','Kayseri');
+
+insert into bolum values ('Bilgisayar');
+insert into bolum values ('mekatronik');
+insert into bolum values ('elektrik');
+
+
+
+select * from bolum
+select * from ogr
+
+select (ogr.ogr_adi+''+ogr.ogr_sooyadi) as ogr,
+bolum.bolum_ad as bolum  
+from ogr 
+join bolum on ogr.bolum_id=bolum.bolum_id
+where ogr.adres='Kayseri' and bolum.bolum_ad='bilgisayar'
