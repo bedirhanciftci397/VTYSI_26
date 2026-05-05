@@ -1,0 +1,106 @@
+using System;
+using System.CodeDom;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    abstract class Calisan
+    {
+        private string isim, soyisim, unvan;
+        private double m_Maas;
+
+        protected void SetBilgiler(string isim, string soyisim, string unvan)
+        {
+            this.isim = isim;
+            this.soyisim = soyisim;
+            this.unvan = unvan;
+        }
+        public double getMaas()
+        {
+            return m_Maas;
+        }
+
+        public void setMaas(double maas)
+        {
+            this.m_Maas = maas;
+        }
+
+        public abstract void zamYap();
+        public abstract void zamYap(double zamOrani);
+
+        public override string ToString()
+        {
+            return $"İsim:{isim}\nSoyisim:{soyisim}\nUnvan:{unvan}\nMaaş:{m_Maas:F2}\n";
+        }
+    }
+
+        class Memur : Calisan
+        {
+            public Memur(string isim, string soyisim, string unvan, double baslangicMaasi)
+            {
+                base.SetBilgiler(isim, soyisim, unvan);
+                base.setMaas(baslangicMaasi);
+            }
+            public override void zamYap()
+            {
+                base.setMaas(getMaas() * 1.10);
+            }
+            public override void zamYap(double zamOrani)
+            {
+                base.setMaas(getMaas() * zamOrani);
+            }
+        }
+
+        class UstDuzeyYonetici : Calisan
+        {
+            public UstDuzeyYonetici(string isim, string soyisim, string unvan, double baslangicMaasi)
+            {
+                base.SetBilgiler(isim, soyisim, unvan);
+                base.setMaas(baslangicMaasi);
+            }
+            public override void zamYap()
+            {
+                base.setMaas(getMaas() * 1.20);
+            }
+            public override void zamYap(double zamOrani)
+            {
+                base.setMaas(getMaas() * (zamOrani + 0.10));
+            }
+        }
+    
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Memur mm = new Memur("Bedirhan", "Çifti", "Dr.", 10000.83);
+            Console.WriteLine(mm.ToString());
+
+            Console.WriteLine("Zam Yapıldı!");
+            mm.zamYap();
+            Console.WriteLine(mm.ToString());
+
+            Console.WriteLine("%15 zam Yapıldı!");
+            mm.zamYap(1.15);
+            Console.WriteLine(mm.ToString());
+
+            Console.WriteLine("-----------------------------------");
+
+            UstDuzeyYonetici yonetici = new UstDuzeyYonetici("Muhammed", "İşçi", "Dr.", 20000.89);
+            Console.WriteLine(yonetici.ToString());
+
+            Console.WriteLine("Zam Yapıldı!");
+            yonetici.zamYap();
+            Console.WriteLine(yonetici.ToString());
+
+            Console.WriteLine("%15 zam Yapıldı!");
+            yonetici.zamYap(1.15);
+            Console.WriteLine(yonetici.ToString());
+
+            Console.ReadLine();
+        }
+    }
+}
